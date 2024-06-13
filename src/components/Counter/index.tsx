@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useCounter } from '../../store.ts'
+import { useCounter } from '../../store'
 
 export const Counter: FC = () => {
   const [count, increment] = useCounter(state => [state.count, state.increment])

@@ -10,6 +10,7 @@ export const App: FC = () => {
       <h1>Hello Zustand!</h1>
       <NewTodo/>
       <TodoList/>
+      <hr/>
       <TotalTodos/>
     </>
   )

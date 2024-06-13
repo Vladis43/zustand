@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useTodos } from '../../store.ts'
+import { useTodos } from '../../store'
 
 export const TotalTodos: FC = () => {
   const count = useTodos(state => state.todos.length)

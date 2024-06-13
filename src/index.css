@@ -46,6 +46,11 @@ input, button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+button:disabled, button:disabled:hover, button:disabled:active {
+  cursor: not-allowed;
+  border-color: transparent;
+  outline: none;
+}
 input:hover, button:hover {
   border-color: #646cff;
 }

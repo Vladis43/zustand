@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import styles from './styles.module.css'
 import { ITodo } from '../../models'
-import { useTodos } from '../../store.ts'
+import { useTodos } from '../../store'
 
 export const TodoItem: FC<ITodo> = ({ id, title, completed }) => {
   const toggleTodo = useTodos(state => state.toggleTodo)
