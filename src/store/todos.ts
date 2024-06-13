@@ -6,22 +6,40 @@ import { useFilter } from './filter.ts'
 
 interface TodosStore {
   todos: ITodo[],
+  loading: boolean,
+  error: string | null,
   addTodo: (title: string) => void
   toggleTodo: (id: string) => void
   removeTodo: (id: string) => void
+  fetchTodos: () => Promise<void>
 }
 
 export const useTodos = create<TodosStore>()(
   devtools(persist((set, get): TodosStore => ({
     todos: [],
+    loading: false,
+    error: null,
     addTodo: (title) => set({ todos: [...get().todos, { id: nanoid(), title, completed: false }] }),
     toggleTodo: (id) => set({
       todos: get().todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
     }),
     removeTodo: (id) => set({ todos: get().todos.filter(todo => todo.id !== id) }),
-  }), {
-    name: 'todos-storage',
-  }))
+    fetchTodos: async () => {
+      set({ loading: true, error: null })
+
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
+
+        if (!response.ok) throw new Error('Failed to fetch! Try again.')
+
+        set({ todos: await response.json() })
+      } catch (error: any) {
+        set({ error: error.message })
+      } finally {
+        set({ loading: false })
+      }
+    }
+  }), { name: 'todos-storage' }))
 )
 
 

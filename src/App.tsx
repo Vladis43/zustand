@@ -1,17 +1,18 @@
 import { FC } from 'react'
 import './App.css'
-import { Counter, NewTodo, TodoList, TotalTodos } from './components'
+import { NewTodo, TodoList, TotalTodos } from './components'
 
 export const App: FC = () => {
   return (
     <>
-      <Counter/>
-      <hr/>
-      <h1>Hello Zustand!</h1>
-      <NewTodo/>
-      <TodoList/>
-      <hr/>
-      <TotalTodos/>
+      <header>
+        <h1>Hello Zustand! 🧸</h1>
+      </header>
+      <main>
+        <NewTodo/>
+        <TodoList/>
+        <TotalTodos/>
+      </main>
     </>
   )
 }

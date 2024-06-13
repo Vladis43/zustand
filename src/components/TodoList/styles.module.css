@@ -1,12 +1,15 @@
 .container {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.filterButtonWrapper {
     display: flex;
-    flex-direction: column;
     gap: 1rem;
 }
 
-.filter {
+.content {
+    margin: 1rem 0;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 1rem;
 }

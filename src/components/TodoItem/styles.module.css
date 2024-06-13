@@ -6,9 +6,15 @@
 
 .checkboxWrapper {
     display: flex;
+    align-items: baseline;
     gap: 0.5rem;
 }
 
 .label {
+    text-align: start;
     cursor: pointer;
+}
+
+.deleteButton {
+    margin-left: 1rem;
 }

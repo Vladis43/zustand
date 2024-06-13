@@ -1,3 +1,28 @@
-.button {
+.fetchButtonWrapper {
+    display: flex;
+}
+
+.fetchButton {
+    flex: 1;
+}
+
+.countButton {
     margin-left: 1rem;
+}
+
+.form {
+    margin-top: 1rem;
+    display: flex;
+}
+
+.input {
+    flex: 1;
+}
+
+.addButton {
+    margin-left: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
