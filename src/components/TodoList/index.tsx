@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import styles from './styles.module.css'
 import { useFilter, useFilteredTodos } from '../../store'
 import { FilterType, ITodo } from '../../models'
@@ -8,12 +8,17 @@ export const TodoList: FC = () => {
   const [filter, setFilter] = useFilter(state => [state.filter, state.setFilter])
   const { filteredTodos, someCompleted, allCompleted } = useFilteredTodos()
 
-  if (!filteredTodos.length) return null
+  useEffect(() => {
+    if (!filteredTodos.length && filter !== FilterType.ALL) setFilter(FilterType.ALL)
+  }, [filteredTodos])
 
   return (
     <div className={styles.container}>
       <div className={styles.filter}>
-        <button disabled={filter === FilterType.ALL} onClick={() => setFilter(FilterType.ALL)}>
+        <button
+          disabled={filter === FilterType.ALL || !filteredTodos.length}
+          onClick={() => setFilter(FilterType.ALL)}
+        >
           All
         </button>
         <button
@@ -29,7 +34,11 @@ export const TodoList: FC = () => {
           Uncompleted
         </button>
       </div>
-      {filteredTodos.map((todo: ITodo) => <TodoItem key={todo.id} {...todo}/>)}
+      {!filteredTodos.length ? (
+        <div>No todos available</div>
+      ) : (
+        filteredTodos.map((todo: ITodo) => <TodoItem key={todo.id} {...todo}/>)
+      )}
     </div>
   )
 }

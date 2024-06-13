@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
 import { FilterType } from '../models'
 
 interface FilterStore {
@@ -6,7 +7,9 @@ interface FilterStore {
   setFilter: (filter: FilterType) => void;
 }
 
-export const useFilter = create<FilterStore>()((set): FilterStore => ({
-  filter: FilterType.ALL,
-  setFilter: (filter) => set({ filter }),
-}))
+export const useFilter = create<FilterStore>()(
+  devtools((set): FilterStore => ({
+    filter: FilterType.ALL,
+    setFilter: (filter) => set({ filter }),
+  }))
+)

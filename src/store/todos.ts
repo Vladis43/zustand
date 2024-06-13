@@ -1,6 +1,7 @@
-import { FilterType, ITodo } from '../models'
 import { create } from 'zustand'
+import { persist, devtools } from 'zustand/middleware'
 import { nanoid } from 'nanoid'
+import { FilterType, ITodo } from '../models'
 import { useFilter } from './filter.ts'
 
 interface TodosStore {
@@ -10,22 +11,23 @@ interface TodosStore {
   removeTodo: (id: string) => void
 }
 
-export const useTodos = create<TodosStore>()((set, get): TodosStore => ({
-  todos: [],
-  addTodo: (title) => set({ todos: [...get().todos, { id: nanoid(), title, completed: false }] }),
-  toggleTodo: (id) => set({
-    todos: get().todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
-  }),
-  removeTodo: (id) => set({ todos: get().todos.filter(todo => todo.id !== id) }),
-}))
+export const useTodos = create<TodosStore>()(
+  devtools(persist((set, get): TodosStore => ({
+    todos: [],
+    addTodo: (title) => set({ todos: [...get().todos, { id: nanoid(), title, completed: false }] }),
+    toggleTodo: (id) => set({
+      todos: get().todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo)
+    }),
+    removeTodo: (id) => set({ todos: get().todos.filter(todo => todo.id !== id) }),
+  }), {
+    name: 'todos-storage',
+  }))
+)
+
 
 export const useFilteredTodos = () => {
-  const [filter, setFilter] = useFilter(state => [state.filter, state.setFilter])
+  const filter = useFilter(state => state.filter)
   const todos = useTodos(state => state.todos)
-
-  if (!todos.length && filter !== FilterType.ALL) {
-    setFilter(FilterType.ALL)
-  }
 
   const filteredTodos = todos.filter((todo) => {
     switch (filter) {
