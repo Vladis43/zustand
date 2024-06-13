@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkboxWrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.label {
+    cursor: pointer;
+}
